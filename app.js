@@ -25,14 +25,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post(
-	'/log-in',
-	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/',
-	}),
-);
-
 // express middleware
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -41,10 +33,28 @@ app.use(express.static('public'));
 
 // routes
 const indexRouter = require('./routes/index.route');
-const userRouter = require('./routes/signup.route');
+const signupRouter = require('./routes/signup.route');
+const loginRouter = require('./routes/login.route');
 
 app.use('/', indexRouter);
-app.use('/sign-up', userRouter);
+app.use('/sign-up', signupRouter);
+app.use('/login', loginRouter);
+app.post('/login', (req, res, next) => {
+	passport.authenticate('local', (err, user, info) => {
+		if (err) return next(err);
+
+		if (!user) {
+			return res.status(401).render('login', {
+				error: info.message,
+			});
+		}
+
+		req.logIn(user, (err) => {
+			if (err) return next(err);
+			return res.redirect('/');
+		});
+	})(req, res, next);
+});
 
 const PORT = process.env.PORT || 8001;
 app.listen(PORT, (err) => {
