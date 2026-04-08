@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join the Clubhouse</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="scene">
+    <div class="noise"></div>
+
+    <div class="card">
+
+      <div class="card__header">
+        <div class="logo">
+          <span class="logo__icon">✦</span>
+        </div>
+        <h1 class="card__title">Join the Clubhouse</h1>
+        <p class="card__subtitle">Members only. Apply for your seat.</p>
+      </div>
+
+      
+
+      <form action="/sign-up" method="POST" class="form">
+
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label" for="first_name">First name</label>
+            <input
+              class="form__input"
+              type="text"
+              id="first_name"
+              name="first_name"
+              placeholder="Ada"
+              value="<%= old.first_name ||''  %>"
+              required
+            />
+          <% if (errors && errors.first_name) { %>
+            <span class="alert alert--error"><%= errors.first_name.msg  %></span>
+          <% } %>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="last_name">Last name</label>
+            <input
+              class="form__input"
+              type="text"
+              id="last_name"
+              name="last_name"
+              placeholder="Lovelace"
+              value="<%= old.last_name ||''  %>"
+              required
+            />
+            <% if (errors && errors.last_name) { %>
+            <span class="alert alert--error"><%= errors.last_name.msg  %></span>
+          <% } %>
+          </div>
+        </div>
+
+        <div class="form__group">
+          <label class="form__label" for="username">Username</label>
+          <div class="form__input-wrap">
+            <span class="form__prefix">@</span>
+            <input
+              class="form__input form__input--prefixed"
+              type="text"
+              id="username"
+              name="username"
+              placeholder="yourhandle"
+              value="<%= old.username ||''  %>"
+              required
+            />
+            <% if (errors && errors.username) { %>
+            <span class="alert alert--error"><%= errors.username.msg  %></span>
+          <% } %>
+          </div>
+        </div>
+
+        <div class="form__group">
+          <label class="form__label" for="password">Password</label>
+          <input
+            class="form__input"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            value="<%= old.password ||''  %>"
+            required
+          />
+          <% if (errors && errors.password) { %>
+            <span class="alert alert--error"><%= errors.password.msg  %></span>
+          <% } %>
+        </div>
+
+        <div class="form__group">
+          <label class="form__label" for="confirmPassword">Confirm password</label>
+          <input
+            class="form__input"
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="••••••••"
+            value="<%= old.confirmPassword ||''  %>"
+            required
+          />
+          <% if (errors && errors.confirmPassword) { %>
+            <span class="alert alert--error"><%= errors.confirmPassword.msg  %></span>
+          <% } %>
+        </div>
+
+        <button class="btn" type="submit">
+          <span class="btn__text">Request membership</span>
+          <span class="btn__icon">→</span>
+        </button>
+
+      </form>
+
+      <p class="card__footer">
+        Already a member? <a href="/login" class="link">Sign in</a>
+      </p>
+
+    </div>
+  </div>
+
+</body>
+</html>
