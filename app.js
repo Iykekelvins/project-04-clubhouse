@@ -55,6 +55,14 @@ app.post('/login', (req, res, next) => {
 		});
 	})(req, res, next);
 });
+app.get('/log-out', (req, res, next) => {
+	req.logout((err) => {
+		if (err) {
+			return next(err);
+		}
+		res.redirect('/');
+	});
+});
 
 const PORT = process.env.PORT || 8001;
 app.listen(PORT, (err) => {

@@ -1,9 +1,77 @@
+<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Odin Clubhouse</title>
-	</head>
-	<body></body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Odin Clubhouse</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="scene">
+    <div class="noise"></div>
+
+    <div class="index-wrap">
+
+      <!-- Nav -->
+      <nav class="nav">
+        <div class="logo">
+          <span class="logo__icon">✦</span>
+        </div>
+        <div class="nav__links">
+          <a href="/messages/new" class="nav__btn">+ New message</a>
+          <a href="/logout" class="nav__logout">Logout</a>
+        </div>
+      </nav>
+
+      <!-- Header -->
+      <header class="index-header">
+        <h1 class="index-title">The Odin Clubhouse</h1>
+        <p class="index-subtitle">
+          <% if (user.membership_status === 'premium') { %>
+            You have full access, <strong><%= user.username %></strong>.
+          <% } else { %>
+            Upgrade to premium to see who's speaking.
+          <% } %>
+        </p>
+      </header>
+
+      <!-- Messages -->
+      <% if (messages.length === 0) { %>
+        <div class="empty">
+          <p class="empty__text">No messages yet. Be the first to speak.</p>
+          <a href="/messages/new" class="link">Post a message →</a>
+        </div>
+      <% } else { %>
+        <ul class="message-list">
+          <% messages.forEach(message => { %>
+            <li class="message-card">
+              <div class="message-card__body">
+                <h2 class="message-card__title"><%= message.title %></h2>
+                <p class="message-card__content"><%= message.content %></p>
+              </div>
+              <div class="message-card__meta">
+                <% if (user.membership_status === 'premium') { %>
+                  <span class="meta__author">
+                    ✦ <%= message.first_name %> <%= message.last_name %> (@<%= message.username %>)
+                  </span>
+                  <span class="meta__date">
+                    <%= new Date(message.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                  </span>
+                <% } else { %>
+                  <span class="meta__locked">🔒 Premium members only</span>
+                <% } %>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+
+    </div>
+  </div>
+
+</body>
 </html>
