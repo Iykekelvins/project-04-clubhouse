@@ -1,6 +1,7 @@
 const { validationResult, matchedData } = require('express-validator');
 const { validateMessage } = require('../lib/validator');
 const { addNewMessage } = require('../db/mutations');
+const { isAuth } = require('../middleware/auth.middleware');
 
 const createNewMessageView = (req, res) => {
 	res.render('new-message', { body: {}, errors: {} });
@@ -8,6 +9,7 @@ const createNewMessageView = (req, res) => {
 
 const createMessage = [
 	validateMessage,
+	isAuth,
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
