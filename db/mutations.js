@@ -7,6 +7,14 @@ const createUser = async (first_name, last_name, username, password) => {
 	);
 };
 
+const addNewMessage = async (title, content, user_id) => {
+	await pool.query(
+		'INSERT INTO messages (title, content, user_id) VALUES ($1, $2, $3)',
+		[title, content, user_id],
+	);
+};
+
 module.exports = {
 	createUser,
+	addNewMessage,
 };

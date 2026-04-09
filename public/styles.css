@@ -486,3 +486,10 @@ body {
 		padding: 0.4rem 0.75rem;
 	}
 }
+
+/* ─── Textarea ───────────────────────────────────────────── */
+.form__textarea {
+	resize: vertical;
+	min-height: 140px;
+	line-height: 1.65;
+}

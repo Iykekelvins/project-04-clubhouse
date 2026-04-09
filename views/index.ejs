@@ -22,8 +22,13 @@
           <span class="logo__icon">✦</span>
         </div>
         <div class="nav__links">
-          <a href="/messages/new" class="nav__btn">+ New message</a>
-          <a href="/logout" class="nav__logout">Logout</a>
+          <% if (locals.user) { %>
+            <a href="/messages/new" class="nav__btn">+ New message</a>
+            <a href="/logout" class="nav__logout">Logout</a>
+          <% } %>
+          <% if (!locals.user) { %>
+            <a href="/login" class="nav__logout">Log in</a>
+          <% } %>
         </div>
       </nav>
 
@@ -31,7 +36,7 @@
       <header class="index-header">
         <h1 class="index-title">The Odin Clubhouse</h1>
         <p class="index-subtitle">
-          <% if (user.membership_status === 'premium') { %>
+          <% if (user?.membership_status === 'premium') { %>
             You have full access, <strong><%= user.username %></strong>.
           <% } else { %>
             Upgrade to premium to see who's speaking.
@@ -43,7 +48,9 @@
       <% if (messages.length === 0) { %>
         <div class="empty">
           <p class="empty__text">No messages yet. Be the first to speak.</p>
-          <a href="/messages/new" class="link">Post a message →</a>
+         <% if (locals.user) { %>
+            <a href="/messages/new" class="nav__btn">+ New message</a>
+         <% } %>
         </div>
       <% } else { %>
         <ul class="message-list">
@@ -54,7 +61,7 @@
                 <p class="message-card__content"><%= message.content %></p>
               </div>
               <div class="message-card__meta">
-                <% if (user.membership_status === 'premium') { %>
+                <% if (user?.membership_status === 'premium') { %>
                   <span class="meta__author">
                     ✦ <%= message.first_name %> <%= message.last_name %> (@<%= message.username %>)
                   </span>

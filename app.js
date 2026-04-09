@@ -35,10 +35,13 @@ app.use(express.static('public'));
 const indexRouter = require('./routes/index.route');
 const signupRouter = require('./routes/signup.route');
 const loginRouter = require('./routes/login.route');
+const messagesRouter = require('./routes/messages.route');
 
 app.use('/', indexRouter);
 app.use('/sign-up', signupRouter);
 app.use('/login', loginRouter);
+app.use('/messages', messagesRouter);
+
 app.post('/login', (req, res, next) => {
 	passport.authenticate('local', (err, user, info) => {
 		if (err) return next(err);
@@ -55,7 +58,7 @@ app.post('/login', (req, res, next) => {
 		});
 	})(req, res, next);
 });
-app.get('/log-out', (req, res, next) => {
+app.get('/logout', (req, res, next) => {
 	req.logout((err) => {
 		if (err) {
 			return next(err);
