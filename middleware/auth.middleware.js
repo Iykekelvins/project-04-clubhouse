@@ -5,3 +5,11 @@ module.exports.isAuth = (req, res, next) => {
 		res.status(401).redirect('/login');
 	}
 };
+
+module.exports.isAdmin = (req, res, next) => {
+	if (req.isAuthenticated() && req.user.is_admin) {
+		next();
+	} else {
+		res.status(403).redirect('/');
+	}
+};

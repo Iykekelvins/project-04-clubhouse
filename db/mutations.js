@@ -21,8 +21,21 @@ const updateMembershipStatus = async (user_id, status) => {
 	]);
 };
 
+const updateAdminStatus = async (user_id, status) => {
+	await pool.query('UPDATE users SET is_admin = $1 WHERE id = $2', [
+		status,
+		user_id,
+	]);
+};
+
+const deleteMessage = async (id) => {
+	await pool.query('DELETE FROM messages WHERE id = $1', [id]);
+};
+
 module.exports = {
 	createUser,
 	addNewMessage,
 	updateMembershipStatus,
+	updateAdminStatus,
+	deleteMessage,
 };

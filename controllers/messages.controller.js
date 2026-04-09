@@ -1,7 +1,7 @@
 const { validationResult, matchedData } = require('express-validator');
 const { validateMessage } = require('../lib/validator');
-const { addNewMessage } = require('../db/mutations');
-const { isAuth } = require('../middleware/auth.middleware');
+const { addNewMessage, deleteMessage } = require('../db/mutations');
+const { isAuth, isAdmin } = require('../middleware/auth.middleware');
 
 const createNewMessageView = (req, res) => {
 	res.render('new-message', { body: {}, errors: {} });
@@ -10,7 +10,7 @@ const createNewMessageView = (req, res) => {
 const createMessage = [
 	validateMessage,
 	isAuth,
-	async (req, res) => {
+	async (req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return res.status(400).render('new-message', {
@@ -29,7 +29,22 @@ const createMessage = [
 	},
 ];
 
+const deleteUserMessage = [
+	isAdmin,
+	async (req, res, next) => {
+		const id = req.params.id;
+
+		try {
+			await deleteMessage(id);
+			res.redirect('/');
+		} catch (error) {
+			next(error);
+		}
+	},
+];
+
 module.exports = {
 	createNewMessageView,
 	createMessage,
+	deleteUserMessage,
 };
