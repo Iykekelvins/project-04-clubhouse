@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Update Membership Status - The Odin Clubhouse</title>
+		<link rel="stylesheet" href="/styles.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap"
+			rel="stylesheet" />
+	</head>
+	<body>
+		<div class="scene">
+			<div class="noise"></div>
+
+			<div class="card">
+				<div class="card__header">
+					<div class="logo">
+						<span class="logo__icon">✦</span>
+					</div>
+					<h1 class="card__title">Become a premium member</h1>
+          <p class="card__subtitle">Enter secret pasword to join the clubhouse</p>
+				</div>
+
+     <div style="margin-bottom: 20px;">
+          <% if (errors.password) { %>
+            <span class="alert alert--error"><%= errors.password.msg %></span>
+          <% } %>
+     </div>
+
+				<form action="/users/<%= user.id  %>" method="POST" class="form">
+					<div class="form__group">
+						<label class="form__label" for="password">Password</label>
+						<div class="form__input-wrap">
+							<input
+								class="form__input"
+								type="text"
+								id="password"
+								name="password"
+								placeholder="(123456 is the secret 😅)"
+								required />
+						</div>
+					</div>
+
+					
+
+					<button class="btn" type="submit">
+						<span class="btn__text">Continue</span>
+						<span class="btn__icon">→</span>
+					</button>
+				</form>
+
+				
+			</div>
+		</div>
+	</body>
+</html>

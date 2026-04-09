@@ -14,7 +14,15 @@ const addNewMessage = async (title, content, user_id) => {
 	);
 };
 
+const updateMembershipStatus = async (user_id, status) => {
+	await pool.query('UPDATE users SET membership_status = $1 WHERE id = $2', [
+		status,
+		user_id,
+	]);
+};
+
 module.exports = {
 	createUser,
 	addNewMessage,
+	updateMembershipStatus,
 };

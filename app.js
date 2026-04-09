@@ -36,11 +36,13 @@ const indexRouter = require('./routes/index.route');
 const signupRouter = require('./routes/signup.route');
 const loginRouter = require('./routes/login.route');
 const messagesRouter = require('./routes/messages.route');
+const usersRouter = require('./routes/users.route');
 
 app.use('/', indexRouter);
 app.use('/sign-up', signupRouter);
 app.use('/login', loginRouter);
 app.use('/messages', messagesRouter);
+app.use('/users', usersRouter);
 
 app.post('/login', (req, res, next) => {
 	passport.authenticate('local', (err, user, info) => {

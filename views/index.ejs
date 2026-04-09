@@ -24,8 +24,14 @@
         <div class="nav__links">
           <% if (locals.user) { %>
             <a href="/messages/new" class="nav__btn">+ New message</a>
+
+            <% if (locals.user.membership_status === 'basic') { %>
+              <a href="users/<%= user.id  %>" class="nav__logout">Upgrade to premium</a>
+            <% } %>
+
             <a href="/logout" class="nav__logout">Logout</a>
           <% } %>
+
           <% if (!locals.user) { %>
             <a href="/login" class="nav__logout">Log in</a>
           <% } %>
